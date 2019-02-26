@@ -1,0 +1,16 @@
+[{
+	"modid": "jadedmaps",
+	"name": "JadedMaps",
+	"description": "Singleplayer maps for JadedPacks",
+	"version": "${version}",
+	"mcversion": "${mcversion}",
+	"url": "",
+	"updateUrl": "",
+	"authorList": [
+		"Developaws"
+	],
+	"credits": "Copyright JadedPacks",
+	"logoFile": "",
+	"screenshots": [],
+	"dependencies": []
+}]
