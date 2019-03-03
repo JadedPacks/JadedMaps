@@ -13,12 +13,21 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = 1.0
+new File('gradle.properties').withReader {
+	def prop = new Properties()
+	prop.load(it)
+	project.ext.config = new ConfigSlurper().parse prop
+}
+
+version = "${config.minecraftVersion}-${config.modVersion}"
 group = "com.jadedpacks"
 archivesBaseName = "JadedMaps"
 
 minecraft {
-	version = "1.6.4-9.11.1.964"
+	version = "${config.minecraftVersion}-${config.forgeVersion}"
+	//runDir = "run"
+	//mappings = config.mcpMappings
+	replace "@VERSION@", config.modVersion
 }
 
 def root = project.projectDir.parentFile
@@ -47,6 +56,6 @@ processResources {
 
 jar {
 	manifest {
-		attributes 'FMLAT': 'JadedMenu_AT.cfg'
+		attributes 'FMLAT': 'JadedMaps_AT.cfg'
 	}
 }

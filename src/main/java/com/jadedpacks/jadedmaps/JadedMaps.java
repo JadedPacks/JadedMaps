@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 
 import java.io.File;
 
-@Mod(modid = "jadedmaps", name = "JadedMaps", version = "${mcversion}")
+@Mod(modid = "jadedmaps", name = "JadedMaps", version = "@VERSION@")
 public class JadedMaps {
 	static File mapsDir;
 
