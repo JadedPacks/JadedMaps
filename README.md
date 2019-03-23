@@ -2,4 +2,4 @@ JadedMaps
 =========
 JadedMaps
 
-http://minecraft.curseforge.com/projects/jadedmaps (To be created)
+http://minecraft.curseforge.com/projects/jadedmaps
