@@ -1,26 +1,23 @@
 package com.jadedpacks.jadedmaps;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatAllowedCharacters;
+import net.minecraft.world.EnumGameType;
+import net.minecraft.world.WorldSettings;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.storage.ISaveFormat;
 
 import java.util.List;
+import java.util.Random;
 
 public class GuiMapList extends GuiScreen {
 	private GuiTextField mapName;
-	private GuiScreen parent;
 	private GuiMapListSlot mapList;
 	private String folderString;
 	List<TemplateSaveFormat> saveList;
 	GuiButton createButton;
 	int selectedSlot;
-
-	public GuiMapList(GuiScreen parent) {
-		this.parent = parent;
-	}
 
 	@Override
 	public void initGui() {
@@ -30,10 +27,11 @@ public class GuiMapList extends GuiScreen {
 		createButton = new GuiButton(0, width / 2 - 155, height - 28, 150, 20, I18n.getString("selectWorld.create"));
 		createButton.enabled = false;
 		buttonList.add(createButton);
-		buttonList.add(new GuiButton(1, width / 2 + 5, width - 28, 150, 20, I18n.getString("gui.cancel")));
+		buttonList.add(new GuiButton(1, width / 2 + 5, height - 28, 150, 20, I18n.getString("gui.cancel")));
 		mapList = new GuiMapListSlot(this);
 		selectedSlot = -1;
 		saveList = new TemplateSaveLoader(JadedMaps.mapsDir).getSaveList();
+		sanitizeFolderName();
 	}
 
 	@Override
@@ -41,8 +39,12 @@ public class GuiMapList extends GuiScreen {
 		super.actionPerformed(button);
 		if(button.id == 0) {
 			createMap();
+			if(mc.getSaveLoader().canLoadWorld(folderString)) {
+				WorldSettings settings = new WorldSettings((new Random()).nextLong(), EnumGameType.SURVIVAL, true, false, WorldType.DEFAULT);
+				mc.launchIntegratedServer(folderString, mapName.getText().trim(), settings);
+			}
 		} else if(button.id == 1) {
-			mc.displayGuiScreen(parent);
+			mc.displayGuiScreen(new GuiSelectWorld(new GuiMainMenu()));
 		}
 		mapList.actionPerformed(button);
 	}
@@ -67,12 +69,12 @@ public class GuiMapList extends GuiScreen {
 
 	private void sanitizeFolderName() {
 		folderString = mapName.getText().trim().replaceAll("[\\./\"]", "_");
-		for(char ch : ChatAllowedCharacters.allowedCharacters.toCharArray()) {
-			folderString = this.folderString.replace(ch, '_');
+		for(char ch : ChatAllowedCharacters.allowedCharactersArray) {
+			folderString = folderString.replace(ch, '_');
 		}
 		final ISaveFormat saveLoader = mc.getSaveLoader();
-		while(saveLoader.getWorldInfo(this.folderString) != null) {
-			folderString = this.folderString + "-";
+		while(saveLoader.getWorldInfo(folderString) != null) {
+			folderString = folderString + "-";
 		}
 	}
 

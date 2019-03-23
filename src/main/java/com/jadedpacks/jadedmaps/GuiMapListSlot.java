@@ -3,10 +3,9 @@ package com.jadedpacks.jadedmaps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.ResourceLocation;
 
 public class GuiMapListSlot extends GuiSlot {
-	private GuiMapList list;
+	private final GuiMapList list;
 
 	GuiMapListSlot(final GuiMapList list) {
 		super(Minecraft.getMinecraft(), list.width, list.height, 78, list.height - 32, 36);
@@ -28,7 +27,7 @@ public class GuiMapListSlot extends GuiSlot {
 	}
 
 	@Override
-	protected boolean isSelected(int slot) {
+	protected boolean isSelected(final int slot) {
 		return slot == list.selectedSlot;
 	}
 
@@ -44,20 +43,6 @@ public class GuiMapListSlot extends GuiSlot {
 
 	@Override
 	protected void drawSlot(final int slot, final int x, final int y, final int slotHeight, final Tessellator tessellator) {
-		final Minecraft mc = Minecraft.getMinecraft();
-		final TemplateSaveFormat world = list.saveList.get(slot);
-		list.drawString(mc.fontRenderer, world.getDisplayName(), x + 34, y + 5, 16777215);
-		//list.drawString(mc.fontRenderer, world.getDescription(), x + 34, y + 17, 8421504);
-		final ResourceLocation icon = world.getIcon();
-		if(icon != null){
-			mc.getTextureManager().bindTexture(icon);
-			tessellator.startDrawingQuads();
-			tessellator.setColorOpaque(255, 255, 255);
-			tessellator.addVertexWithUV(x, y + 32, 0, 0, 1);
-			tessellator.addVertexWithUV(x + 32, y + 32, 0, 1, 1);
-			tessellator.addVertexWithUV(x + 32, y, 0, 1, 0);
-			tessellator.addVertexWithUV(x, y, 0, 0, 0);
-			tessellator.draw();
-		}
+		list.drawString(Minecraft.getMinecraft().fontRenderer, list.saveList.get(slot).getDisplayName(), x, y + 5, 16777215);
 	}
 }

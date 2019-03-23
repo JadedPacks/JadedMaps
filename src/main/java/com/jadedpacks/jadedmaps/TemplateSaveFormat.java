@@ -1,36 +1,14 @@
 package com.jadedpacks.jadedmaps;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.EnumGameType;
 import net.minecraft.world.storage.SaveFormatComparator;
-import net.minecraft.world.storage.WorldInfo;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 
 class TemplateSaveFormat extends SaveFormatComparator {
 	TemplateSaveFormat(final SaveFormatComparator save) {
 		super(save.getFileName(), save.getDisplayName(), save.getLastTimePlayed(), save.sizeOnDisk, EnumGameType.SURVIVAL, save.requiresConversion(), false, false);
-	}
-
-	ResourceLocation getIcon() {
-		final File icon = new File(getPath(), "icon.png");
-		if(!icon.exists()) {
-			return null;
-		}
-		try {
-			final BufferedImage bufferedImage = ImageIO.read(icon);
-			DynamicTexture texture = new DynamicTexture(bufferedImage.getWidth(), bufferedImage.getHeight());
-			bufferedImage.getRGB(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), texture.getTextureData(), 0, bufferedImage.getWidth());
-			texture.updateDynamicTexture();
-			Minecraft.getMinecraft().getTextureManager().loadTexture(new ResourceLocation("jadedmaps", "icon/" + getFileName() + "/icon"), texture);
-		} catch(IOException e) {
-			return null;
-		}
-		return null;
 	}
 
 	void copy(final String folder, final String name) {
@@ -57,16 +35,16 @@ class TemplateSaveFormat extends SaveFormatComparator {
 			if(!targetLocation.exists()) {
 				targetLocation.mkdir();
 			}
-			String[] children = sourceLocation.list();
+			final String[] children = sourceLocation.list();
 			if(children != null) {
 				for(String child : children) {
 					copyDirectory(new File(sourceLocation, child), new File(targetLocation, child));
 				}
 			}
 		} else {
-			InputStream in = new FileInputStream(sourceLocation);
-			OutputStream out = new FileOutputStream(targetLocation);
-			byte[] buf = new byte[1024];
+			final InputStream in = new FileInputStream(sourceLocation);
+			final OutputStream out = new FileOutputStream(targetLocation);
+			final byte[] buf = new byte[1024];
 			int len;
 			while((len = in.read(buf)) > 0) {
 				out.write(buf, 0, len);

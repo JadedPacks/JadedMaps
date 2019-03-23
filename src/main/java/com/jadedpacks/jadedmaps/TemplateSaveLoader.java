@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TemplateSaveLoader extends AnvilSaveConverter {
-	TemplateSaveLoader(File folder) {
+	TemplateSaveLoader(final File folder) {
 		super(folder);
 	}
 
 	@Override
 	public List<TemplateSaveFormat> getSaveList() {
 		List<TemplateSaveFormat> templates = new ArrayList<TemplateSaveFormat>();
-		for(Object savez : super.getSaveList()) {
-			templates.add(new TemplateSaveFormat((SaveFormatComparator) savez));
+		for(SaveFormatComparator saves : (List<SaveFormatComparator>) super.getSaveList()) {
+			templates.add(new TemplateSaveFormat(saves));
 		}
 		return templates;
 	}
