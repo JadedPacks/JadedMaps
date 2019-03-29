@@ -41,6 +41,7 @@ public class GuiMapList extends GuiScreen {
 			createMap();
 			if(mc.getSaveLoader().canLoadWorld(folderString)) {
 				WorldSettings settings = new WorldSettings((new Random()).nextLong(), EnumGameType.SURVIVAL, true, false, WorldType.DEFAULT);
+				settings.commandsAllowed = false;
 				mc.launchIntegratedServer(folderString, mapName.getText().trim(), settings);
 			}
 		} else if(button.id == 1) {
