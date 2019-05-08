@@ -14,9 +14,9 @@ public class TemplateSaveLoader extends AnvilSaveConverter {
 
 	@Override
 	public List<TemplateSaveFormat> getSaveList() {
-		List<TemplateSaveFormat> templates = new ArrayList<TemplateSaveFormat>();
-		for(SaveFormatComparator saves : (List<SaveFormatComparator>) super.getSaveList()) {
-			templates.add(new TemplateSaveFormat(saves));
+		List<TemplateSaveFormat> templates = new ArrayList<>();
+		for(Object saves : super.getSaveList()) {
+			templates.add(new TemplateSaveFormat((SaveFormatComparator) saves));
 		}
 		return templates;
 	}

@@ -19,6 +19,7 @@ new File('gradle.properties').withReader {
 	project.ext.config = new ConfigSlurper().parse prop
 }
 
+compileJava.sourceCompatibility = compileJava.targetCompatibility = sourceCompatibility = targetCompatibility = '1.8'
 version = "${config.minecraftVersion}-${config.modVersion}"
 group = "com.jadedpacks"
 archivesBaseName = "JadedMaps"
