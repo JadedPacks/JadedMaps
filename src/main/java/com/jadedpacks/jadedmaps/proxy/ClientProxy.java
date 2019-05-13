@@ -1,5 +1,7 @@
-package com.jadedpacks.jadedmaps;
+package com.jadedpacks.jadedmaps.proxy;
 
+import com.jadedpacks.jadedmaps.gui.GuiMapList;
+import com.jadedpacks.jadedmaps.JadedMaps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiCreateWorld;
 import net.minecraftforge.client.event.GuiOpenEvent;

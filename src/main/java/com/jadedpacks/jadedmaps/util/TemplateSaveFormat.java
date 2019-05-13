@@ -1,17 +1,18 @@
-package com.jadedpacks.jadedmaps;
+package com.jadedpacks.jadedmaps.util;
 
+import com.jadedpacks.jadedmaps.JadedMaps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.EnumGameType;
 import net.minecraft.world.storage.SaveFormatComparator;
 
 import java.io.*;
 
-class TemplateSaveFormat extends SaveFormatComparator {
+public class TemplateSaveFormat extends SaveFormatComparator {
 	TemplateSaveFormat(final SaveFormatComparator save) {
 		super(save.getFileName(), save.getDisplayName(), save.getLastTimePlayed(), save.sizeOnDisk, EnumGameType.SURVIVAL, save.requiresConversion(), false, false);
 	}
 
-	void copy(final String folder, final String name) {
+	public void copy(final String folder, final String name) {
 		final Minecraft mc = Minecraft.getMinecraft();
 		final File target = new File(new File(mc.mcDataDir, "saves"), folder);
 		if(target.exists()) {

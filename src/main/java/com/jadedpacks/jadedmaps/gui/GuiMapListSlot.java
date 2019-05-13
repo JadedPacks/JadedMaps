@@ -1,4 +1,4 @@
-package com.jadedpacks.jadedmaps;
+package com.jadedpacks.jadedmaps.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;

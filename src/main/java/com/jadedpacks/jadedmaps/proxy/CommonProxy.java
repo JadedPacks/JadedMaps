@@ -1,4 +1,4 @@
-package com.jadedpacks.jadedmaps;
+package com.jadedpacks.jadedmaps.proxy;
 
 public class CommonProxy {
 	public void preInit() {}

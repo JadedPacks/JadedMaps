@@ -1,5 +1,8 @@
-package com.jadedpacks.jadedmaps;
+package com.jadedpacks.jadedmaps.gui;
 
+import com.jadedpacks.jadedmaps.JadedMaps;
+import com.jadedpacks.jadedmaps.util.TemplateSaveFormat;
+import com.jadedpacks.jadedmaps.util.TemplateSaveLoader;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatAllowedCharacters;
@@ -8,6 +11,7 @@ import net.minecraft.world.WorldSettings;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.storage.ISaveFormat;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -26,8 +30,10 @@ public class GuiMapList extends GuiScreen {
 		mapName.setText(I18n.getString("selectWorld.newWorld"));
 		createButton = new GuiButton(0, width / 2 - 155, height - 28, 150, 20, I18n.getString("selectWorld.create"));
 		createButton.enabled = false;
-		buttonList.add(createButton);
-		buttonList.add(new GuiButton(1, width / 2 + 5, height - 28, 150, 20, I18n.getString("gui.cancel")));
+		buttonList.addAll(Arrays.asList(
+			createButton,
+			new GuiButton(1, width / 2 + 5, height - 28, 150, 20, I18n.getString("gui.cancel"))
+		));
 		mapList = new GuiMapListSlot(this);
 		selectedSlot = -1;
 		saveList = new TemplateSaveLoader(JadedMaps.mapsDir).getSaveList();
