@@ -18,7 +18,7 @@ public class GuiMapListSlot extends GuiSlot {
 	}
 
 	@Override
-	protected void elementClicked(final int slot, final boolean doubleClicked) {
+	protected void elementClicked(final int slot, final boolean doubleClicked, final int mouseX, final int mouseY) {
 		list.selectedSlot = slot;
 		list.createButton.enabled = true;
 		if(doubleClicked) {
@@ -42,7 +42,7 @@ public class GuiMapListSlot extends GuiSlot {
 	}
 
 	@Override
-	protected void drawSlot(final int slot, final int x, final int y, final int slotHeight, final Tessellator tessellator) {
-		list.drawString(Minecraft.getMinecraft().fontRenderer, list.saveList.get(slot).getDisplayName(), x, y + 5, 16777215);
+	protected void drawSlot(final int slot, final int x, final int y, final int slotHeight, final Tessellator tessellator, final int mouseX, final int mouseY) {
+		list.drawString(Minecraft.getMinecraft().fontRendererObj, list.saveList.get(slot).getDisplayName(), x, y + 5, 16777215);
 	}
 }

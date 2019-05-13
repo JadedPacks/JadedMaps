@@ -2,14 +2,14 @@ package com.jadedpacks.jadedmaps.util;
 
 import com.jadedpacks.jadedmaps.JadedMaps;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.EnumGameType;
+import net.minecraft.world.WorldSettings;
 import net.minecraft.world.storage.SaveFormatComparator;
 
 import java.io.*;
 
 public class TemplateSaveFormat extends SaveFormatComparator {
 	TemplateSaveFormat(final SaveFormatComparator save) {
-		super(save.getFileName(), save.getDisplayName(), save.getLastTimePlayed(), save.sizeOnDisk, EnumGameType.SURVIVAL, save.requiresConversion(), false, false);
+		super(save.getFileName(), save.getDisplayName(), save.getLastTimePlayed(), save.sizeOnDisk, WorldSettings.GameType.SURVIVAL, save.requiresConversion(), false, false);
 	}
 
 	public void copy(final String folder, final String name) {

@@ -1,5 +1,6 @@
 package com.jadedpacks.jadedmaps.util;
 
+import net.minecraft.client.AnvilConverterException;
 import net.minecraft.world.chunk.storage.AnvilSaveConverter;
 import net.minecraft.world.storage.SaveFormatComparator;
 
@@ -13,8 +14,8 @@ public class TemplateSaveLoader extends AnvilSaveConverter {
 	}
 
 	@Override
-	public List<TemplateSaveFormat> getSaveList() {
-		List<TemplateSaveFormat> templates = new ArrayList<TemplateSaveFormat>();
+	public List<TemplateSaveFormat> getSaveList() throws AnvilConverterException {
+		List<TemplateSaveFormat> templates = new ArrayList<>();
 		for(Object saves : super.getSaveList()) {
 			templates.add(new TemplateSaveFormat((SaveFormatComparator) saves));
 		}

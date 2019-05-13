@@ -1,12 +1,12 @@
 package com.jadedpacks.jadedmaps.proxy;
 
-import com.jadedpacks.jadedmaps.gui.GuiMapList;
 import com.jadedpacks.jadedmaps.JadedMaps;
+import com.jadedpacks.jadedmaps.gui.GuiMapList;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiCreateWorld;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 
 import java.io.File;
 
@@ -19,7 +19,7 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onOpenGui(final GuiOpenEvent event) {
 		if(event.gui instanceof GuiCreateWorld) {
 			event.gui = mapList;

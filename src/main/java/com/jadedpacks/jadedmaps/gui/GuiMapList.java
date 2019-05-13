@@ -3,14 +3,15 @@ package com.jadedpacks.jadedmaps.gui;
 import com.jadedpacks.jadedmaps.JadedMaps;
 import com.jadedpacks.jadedmaps.util.TemplateSaveFormat;
 import com.jadedpacks.jadedmaps.util.TemplateSaveLoader;
+import net.minecraft.client.AnvilConverterException;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatAllowedCharacters;
-import net.minecraft.world.EnumGameType;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.storage.ISaveFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -25,18 +26,23 @@ public class GuiMapList extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		mapName = new GuiTextField(fontRenderer, width / 2 - 100, 45, 200, 20);
+		mapName = new GuiTextField(fontRendererObj, width / 2 - 100, 45, 200, 20);
 		mapName.setFocused(true);
-		mapName.setText(I18n.getString("selectWorld.newWorld"));
-		createButton = new GuiButton(0, width / 2 - 155, height - 28, 150, 20, I18n.getString("selectWorld.create"));
+		mapName.setText(I18n.format("selectWorld.newWorld"));
+		createButton = new GuiButton(0, width / 2 - 155, height - 28, 150, 20, I18n.format("selectWorld.create"));
 		createButton.enabled = false;
 		buttonList.addAll(Arrays.asList(
 			createButton,
-			new GuiButton(1, width / 2 + 5, height - 28, 150, 20, I18n.getString("gui.cancel"))
+			new GuiButton(1, width / 2 + 5, height - 28, 150, 20, I18n.format("gui.cancel"))
 		));
 		mapList = new GuiMapListSlot(this);
 		selectedSlot = -1;
-		saveList = new TemplateSaveLoader(JadedMaps.mapsDir).getSaveList();
+		try {
+			saveList = new TemplateSaveLoader(JadedMaps.mapsDir).getSaveList();
+		} catch(AnvilConverterException e) {
+			saveList = new ArrayList<>();
+			e.printStackTrace();
+		}
 		sanitizeFolderName();
 	}
 
@@ -46,7 +52,7 @@ public class GuiMapList extends GuiScreen {
 		if(button.id == 0) {
 			createMap();
 			if(mc.getSaveLoader().canLoadWorld(folderString)) {
-				WorldSettings settings = new WorldSettings((new Random()).nextLong(), EnumGameType.SURVIVAL, true, false, WorldType.DEFAULT);
+				WorldSettings settings = new WorldSettings((new Random()).nextLong(), WorldSettings.GameType.SURVIVAL, true, false, WorldType.DEFAULT);
 				settings.commandsAllowed = false;
 				mc.launchIntegratedServer(folderString, mapName.getText().trim(), settings);
 			}
@@ -68,9 +74,9 @@ public class GuiMapList extends GuiScreen {
 	public void drawScreen(final int x, final int y, final float f) {
 		mapList.drawScreen(x, y, f);
 		mapName.drawTextBox();
-		drawCenteredString(fontRenderer, I18n.getString("Create Templated World"), width / 2, 20, -1);
-		drawString(fontRenderer, I18n.getString("selectWorld.enterName"), width / 2 - 100, 35, -6250336);
-		drawString(fontRenderer, I18n.getString("selectWorld.resultFolder") + " " + folderString, width / 2 - 100, 68, -6250336);
+		drawCenteredString(fontRendererObj, I18n.format("Create Templated World"), width / 2, 20, -1);
+		drawString(fontRendererObj, I18n.format("selectWorld.enterName"), width / 2 - 100, 35, -6250336);
+		drawString(fontRendererObj, I18n.format("selectWorld.resultFolder") + " " + folderString, width / 2 - 100, 68, -6250336);
 		super.drawScreen(x, y, f);
 	}
 
